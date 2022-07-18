@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    class FlatRepository : IFlatRepository
+    public class FlatRepository : IFlatRepository
     {
         private static readonly ISet<Flat> _flats = new HashSet<Flat>()
         {
