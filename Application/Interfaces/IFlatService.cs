@@ -12,5 +12,6 @@ namespace Application.Interfaces
         IEnumerable<FlatDto> GetAllFlats();
         FlatDto GetFlatById(int id);
         FlatDto AddNewFlat(CreateFlatDto flat);
+        void UpdateFlat(UpdateFlatDto updateFlat);
     }
 }

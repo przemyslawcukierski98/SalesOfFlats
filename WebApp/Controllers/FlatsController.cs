@@ -49,5 +49,13 @@ namespace WebApp.Controllers
 
             return Created($"api/flats/{newFlat.Id}", newFlat); ;
         }
+
+        [SwaggerOperation(Summary = "Update a existing flat")]
+        [HttpPut]
+        public IActionResult Update(UpdateFlatDto flat)
+        {
+            _flatService.UpdateFlat(flat);
+            return NoContent();
+        }
     }
 }

@@ -46,5 +46,12 @@ namespace Application.Services
             var flat = _flatRepository.GetFlatById(id);
             return _mapper.Map<FlatDto>(flat);
         }
+
+        public void UpdateFlat(UpdateFlatDto updateFlat)
+        {
+            var existingFlat = _flatRepository.GetFlatById(updateFlat.Id);
+            var flat = _mapper.Map(updateFlat, existingFlat);
+            _flatRepository.Update(flat);
+        }
     }
 }
