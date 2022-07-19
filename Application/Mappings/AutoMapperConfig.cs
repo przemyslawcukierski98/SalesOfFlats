@@ -15,6 +15,7 @@ namespace Application.Mappings
             => new MapperConfiguration(config =>
             {
                 config.CreateMap<Flat, FlatDto>();
+                config.CreateMap<CreateFlatDto, Flat>();
             })
             .CreateMapper();
     }

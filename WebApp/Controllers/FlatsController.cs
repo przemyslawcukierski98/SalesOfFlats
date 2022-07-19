@@ -1,5 +1,7 @@
-﻿using Application.Interfaces;
+﻿using Application.Dto;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,7 @@ namespace WebApp.Controllers
             _flatService = flatService;
         }
 
+        [SwaggerOperation(Summary = "Retrieves all flats")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -25,6 +28,7 @@ namespace WebApp.Controllers
             return Ok(flats);
         }
 
+        [SwaggerOperation(Summary = "Retrieve flat by ID")]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -37,6 +41,13 @@ namespace WebApp.Controllers
             return Ok(flat);
         }
 
+        [SwaggerOperation(Summary = "Create a new flat")]
+        [HttpPost]
+        public IActionResult Create(CreateFlatDto flat)
+        {
+            var newFlat = _flatService.AddNewFlat(flat);
 
+            return Created($"api/flats/{newFlat.Id}", newFlat); ;
+        }
     }
 }

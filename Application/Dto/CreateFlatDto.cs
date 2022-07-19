@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Application.Dto
 {
-    public class FlatDto
+    public class CreateFlatDto
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
     }

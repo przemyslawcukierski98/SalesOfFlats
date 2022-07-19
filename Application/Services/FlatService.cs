@@ -1,6 +1,7 @@
 ﻿using Application.Dto;
 using Application.Interfaces;
 using AutoMapper;
+using Domain.Entities;
 using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,19 @@ namespace Application.Services
         {
             _flatRepository = flatRepository;
             _mapper = mapper;
+        }
+
+        public FlatDto AddNewFlat(CreateFlatDto flat)
+        {
+            if(string.IsNullOrEmpty(flat.Title))
+            {
+                throw new Exception("Title is empty");
+            }
+
+            var newFlat = _mapper.Map<Flat>(flat);
+            _flatRepository.Add(newFlat);
+
+            return _mapper.Map<FlatDto>(newFlat);
         }
 
         public IEnumerable<FlatDto> GetAllFlats()
