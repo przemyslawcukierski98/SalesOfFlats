@@ -33,7 +33,7 @@ namespace WebApp.Controllers
         public IActionResult Get(int id)
         {
             var flat = _flatService.GetFlatById(id);
-            if(flat == null)
+            if (flat == null)
             {
                 return NotFound();
             }
@@ -50,11 +50,19 @@ namespace WebApp.Controllers
             return Created($"api/flats/{newFlat.Id}", newFlat); ;
         }
 
-        [SwaggerOperation(Summary = "Update a existing flat")]
+        [SwaggerOperation(Summary = "Update an existing flat")]
         [HttpPut]
         public IActionResult Update(UpdateFlatDto flat)
         {
             _flatService.UpdateFlat(flat);
+            return NoContent();
+        }
+
+        [SwaggerOperation(Summary = "Delete an existing flat")]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _flatService.DeleteFlat(id);
             return NoContent();
         }
     }

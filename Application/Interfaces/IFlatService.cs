@@ -13,5 +13,6 @@ namespace Application.Interfaces
         FlatDto GetFlatById(int id);
         FlatDto AddNewFlat(CreateFlatDto flat);
         void UpdateFlat(UpdateFlatDto updateFlat);
+        void DeleteFlat(int id);
     }
 }

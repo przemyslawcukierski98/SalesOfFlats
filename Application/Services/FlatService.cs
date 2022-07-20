@@ -35,6 +35,12 @@ namespace Application.Services
             return _mapper.Map<FlatDto>(newFlat);
         }
 
+        public void DeleteFlat(int id)
+        {
+            var flat = _flatRepository.GetFlatById(id);
+            _flatRepository.Delete(flat);
+        }
+
         public IEnumerable<FlatDto> GetAllFlats()
         {
             var flats = _flatRepository.GetAllFlats();
