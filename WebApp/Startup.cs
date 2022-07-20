@@ -31,17 +31,7 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IFlatRepository, FlatRepository>();
-            services.AddScoped<IFlatService, FlatService>();
-
-            services.AddSingleton(AutoMapperConfig.Initialize());
-
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.EnableAnnotations();
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApp", Version = "v1" });
-            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
