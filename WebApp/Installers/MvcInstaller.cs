@@ -1,7 +1,9 @@
-﻿using Application.Interfaces;
+﻿using Application;
+using Application.Interfaces;
 using Application.Mappings;
 using Application.Services;
 using Domain.Interfaces;
+using Infrastructure;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,11 +18,8 @@ namespace WebApp.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IFlatRepository, FlatRepository>();
-            services.AddScoped<IFlatService, FlatService>();
-
-            services.AddSingleton(AutoMapperConfig.Initialize());
-
+            services.AddApplication();
+            services.AddInfrastructure();
             services.AddControllers();
         }
     }
