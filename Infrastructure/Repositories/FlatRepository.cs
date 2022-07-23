@@ -20,7 +20,6 @@ namespace Infrastructure.Repositories
 
         public Flat Add(Flat flat)
         {
-            flat.Id = _context.Flats.Count() + 1;
             flat.Created = DateTime.UtcNow;
             _context.Flats.Add(flat);
             _context.SaveChanges();
