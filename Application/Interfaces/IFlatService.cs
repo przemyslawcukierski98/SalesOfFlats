@@ -9,10 +9,10 @@ namespace Application.Interfaces
 {
     public interface IFlatService
     {
-        IEnumerable<FlatDto> GetAllFlats();
-        FlatDto GetFlatById(int id);
-        FlatDto AddNewFlat(CreateFlatDto flat);
-        void UpdateFlat(UpdateFlatDto updateFlat);
-        void DeleteFlat(int id);
+        Task<IEnumerable<FlatDto>> GetAllFlatsAsync();
+        Task<FlatDto> GetFlatByIdAsync(int id);
+        Task<FlatDto> AddNewFlatAsync(CreateFlatDto flat);
+        Task UpdateFlatAsync(UpdateFlatDto updateFlat);
+        Task DeleteFlatAsync(int id);
     }
 }

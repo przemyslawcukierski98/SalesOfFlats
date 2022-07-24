@@ -22,17 +22,17 @@ namespace WebApp.Controllers
 
         [SwaggerOperation(Summary = "Retrieves all flats")]
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var flats = _flatService.GetAllFlats();
+            var flats = await _flatService.GetAllFlatsAsync();
             return Ok(flats);
         }
 
         [SwaggerOperation(Summary = "Retrieve flat by ID")]
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var flat = _flatService.GetFlatById(id);
+            var flat = await _flatService.GetFlatByIdAsync(id);
             if (flat == null)
             {
                 return NotFound();
@@ -43,26 +43,26 @@ namespace WebApp.Controllers
 
         [SwaggerOperation(Summary = "Create a new flat")]
         [HttpPost]
-        public IActionResult Create(CreateFlatDto flat)
+        public async Task<IActionResult> Create(CreateFlatDto flat)
         {
-            var newFlat = _flatService.AddNewFlat(flat);
+            var newFlat = await _flatService.AddNewFlatAsync(flat);
 
             return Created($"api/flats/{newFlat.Id}", newFlat); ;
         }
 
         [SwaggerOperation(Summary = "Update an existing flat")]
         [HttpPut]
-        public IActionResult Update(UpdateFlatDto flat)
+        public async Task<IActionResult> Update(UpdateFlatDto flat)
         {
-            _flatService.UpdateFlat(flat);
+            await _flatService.UpdateFlatAsync(flat);
             return NoContent();
         }
 
         [SwaggerOperation(Summary = "Delete an existing flat")]
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _flatService.DeleteFlat(id);
+            await _flatService.DeleteFlatAsync(id);
             return NoContent();
         }
     }

@@ -22,7 +22,7 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public FlatDto AddNewFlat(CreateFlatDto flat)
+        public async Task<FlatDto> AddNewFlatAsync(CreateFlatDto flat)
         {
             if(string.IsNullOrEmpty(flat.Title))
             {
@@ -30,34 +30,34 @@ namespace Application.Services
             }
 
             var newFlat = _mapper.Map<Flat>(flat);
-            _flatRepository.Add(newFlat);
+            await _flatRepository.AddAsync(newFlat);
 
             return _mapper.Map<FlatDto>(newFlat);
         }
 
-        public void DeleteFlat(int id)
+        public async Task DeleteFlatAsync(int id)
         {
-            var flat = _flatRepository.GetFlatById(id);
-            _flatRepository.Delete(flat);
+            var flat = await _flatRepository.GetFlatByIdAsync(id);
+            await _flatRepository.DeleteAsync(flat);
         }
 
-        public IEnumerable<FlatDto> GetAllFlats()
+        public async Task<IEnumerable<FlatDto>> GetAllFlatsAsync()
         {
-            var flats = _flatRepository.GetAllFlats();
+            var flats = await _flatRepository.GetAllFlatsAsync();
             return _mapper.Map<IEnumerable<FlatDto>>(flats);
         }
 
-        public FlatDto GetFlatById(int id)
+        public async Task<FlatDto> GetFlatByIdAsync(int id)
         {
-            var flat = _flatRepository.GetFlatById(id);
+            var flat = await _flatRepository.GetFlatByIdAsync(id);
             return _mapper.Map<FlatDto>(flat);
         }
 
-        public void UpdateFlat(UpdateFlatDto updateFlat)
+        public async Task UpdateFlatAsync(UpdateFlatDto updateFlat)
         {
-            var existingFlat = _flatRepository.GetFlatById(updateFlat.Id);
+            var existingFlat = await _flatRepository.GetFlatByIdAsync(updateFlat.Id);
             var flat = _mapper.Map(updateFlat, existingFlat);
-            _flatRepository.Update(flat);
+            await _flatRepository.UpdateAsync(flat);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,35 +19,37 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public Flat Add(Flat flat)
+        public async Task<Flat> AddAsync(Flat flat)
         {
             flat.Created = DateTime.UtcNow;
             _context.Flats.Add(flat);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return flat;
         }
 
-        public void Delete(Flat flat)
+        public async Task DeleteAsync(Flat flat)
         {
             _context.Flats.Remove(flat);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            await Task.CompletedTask;
         }
 
-        public IEnumerable<Flat> GetAllFlats()
+        public async Task<IEnumerable<Flat>> GetAllFlatsAsync()
         {
-            return _context.Flats;
+            return await _context.Flats.ToListAsync();
         }
 
-        public Flat GetFlatById(int id)
+        public async Task<Flat> GetFlatByIdAsync(int id)
         {
-            return _context.Flats.SingleOrDefault(x => x.Id == id);
+            return await _context.Flats.SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public void Update(Flat flat)
+        public async Task UpdateAsync(Flat flat)
         {
             flat.LastModified = DateTime.UtcNow;
             _context.Flats.Update(flat);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            await Task.CompletedTask;
         }
     }
 }

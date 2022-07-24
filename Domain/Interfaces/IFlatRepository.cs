@@ -9,10 +9,10 @@ namespace Domain.Interfaces
 {
     public interface IFlatRepository
     {
-        IEnumerable<Flat> GetAllFlats();
-        Flat GetFlatById(int id);
-        Flat Add(Flat flat);
-        void Update(Flat flat);
-        void Delete(Flat flat);
+        Task<IEnumerable<Flat>> GetAllFlatsAsync();
+        Task<Flat> GetFlatByIdAsync(int id);
+        Task<Flat> AddAsync(Flat flat);
+        Task UpdateAsync(Flat flat);
+        Task DeleteAsync(Flat flat);
     }
 }
