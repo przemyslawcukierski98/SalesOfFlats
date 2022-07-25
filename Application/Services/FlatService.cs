@@ -41,9 +41,9 @@ namespace Application.Services
             await _flatRepository.DeleteAsync(flat);
         }
 
-        public async Task<IEnumerable<FlatDto>> GetAllFlatsAsync()
+        public async Task<IEnumerable<FlatDto>> GetAllFlatsAsync(int pageNumber, int pageSize)
         {
-            var flats = await _flatRepository.GetAllFlatsAsync();
+            var flats = await _flatRepository.GetAllFlatsAsync(pageNumber, pageSize);
             return _mapper.Map<IEnumerable<FlatDto>>(flats);
         }
 

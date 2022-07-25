@@ -9,7 +9,7 @@ namespace Domain.Interfaces
 {
     public interface IFlatRepository
     {
-        Task<IEnumerable<Flat>> GetAllFlatsAsync();
+        Task<IEnumerable<Flat>> GetAllFlatsAsync(int pageNumber, int pageSize);
         Task<Flat> GetFlatByIdAsync(int id);
         Task<Flat> AddAsync(Flat flat);
         Task UpdateAsync(Flat flat);

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Filters;
 using WebApp.Wrappers;
 
 namespace WebApp.Controllers
@@ -23,10 +24,14 @@ namespace WebApp.Controllers
 
         [SwaggerOperation(Summary = "Retrieves all flats")]
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery]PaginationFilter paginationFilter)
         {
-            var flats = await _flatService.GetAllFlatsAsync();
-            return Ok(new Response<IEnumerable<FlatDto>>(flats));
+            var validPaginationFilter = new PaginationFilter(paginationFilter.PageNumber, paginationFilter.PageSize);
+
+            var flats = await _flatService.GetAllFlatsAsync(paginationFilter.PageNumber, paginationFilter.PageSize);
+            var totalRecords = flats.Count();
+
+            return Ok();
         }
 
         [SwaggerOperation(Summary = "Retrieve flat by ID")]
