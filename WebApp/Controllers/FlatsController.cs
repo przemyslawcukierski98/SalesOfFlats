@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Wrappers;
 
 namespace WebApp.Controllers
 {
@@ -25,7 +26,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Get()
         {
             var flats = await _flatService.GetAllFlatsAsync();
-            return Ok(flats);
+            return Ok(new Response<IEnumerable<FlatDto>>(flats));
         }
 
         [SwaggerOperation(Summary = "Retrieve flat by ID")]
@@ -38,7 +39,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            return Ok(flat);
+            return Ok(new Response<FlatDto>(flat));
         }
 
         [SwaggerOperation(Summary = "Create a new flat")]
@@ -47,7 +48,7 @@ namespace WebApp.Controllers
         {
             var newFlat = await _flatService.AddNewFlatAsync(flat);
 
-            return Created($"api/flats/{newFlat.Id}", newFlat); ;
+            return Created($"api/flats/{newFlat.Id}", new Response<FlatDto>(newFlat)); ;
         }
 
         [SwaggerOperation(Summary = "Update an existing flat")]
