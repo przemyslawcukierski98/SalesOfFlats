@@ -13,5 +13,13 @@ namespace WebApp.Wrappers
         public int TotalRecords { get; set; }
         public bool NextPage { get; set; }
         public bool PreviousPage { get; set; }
+
+        public PagedResponse(T data, int pageNumber, int pageSize)
+        {
+            PageNumber = pageNumber;
+            PageSize = pageSize;
+            Data = data;
+            Succeded = true;
+        }
     }
 }

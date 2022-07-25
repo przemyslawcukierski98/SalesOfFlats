@@ -31,7 +31,7 @@ namespace WebApp.Controllers
             var flats = await _flatService.GetAllFlatsAsync(paginationFilter.PageNumber, paginationFilter.PageSize);
             var totalRecords = flats.Count();
 
-            return Ok();
+            return Ok(new PagedResponse<IEnumerable<FlatDto>>(flats, validPaginationFilter.PageNumber, validPaginationFilter.PageSize));
         }
 
         [SwaggerOperation(Summary = "Retrieve flat by ID")]
