@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Filters;
+using WebApp.Helpers;
 using WebApp.Wrappers;
 
 namespace WebApp.Controllers
@@ -31,7 +32,7 @@ namespace WebApp.Controllers
             var flats = await _flatService.GetAllFlatsAsync(paginationFilter.PageNumber, paginationFilter.PageSize);
             var totalRecords = flats.Count();
 
-            return Ok(new PagedResponse<IEnumerable<FlatDto>>(flats, validPaginationFilter.PageNumber, validPaginationFilter.PageSize));
+            return Ok(PaginationHelper.CreatePagedResponse(flats, paginationFilter, totalRecords));
         }
 
         [SwaggerOperation(Summary = "Retrieve flat by ID")]
