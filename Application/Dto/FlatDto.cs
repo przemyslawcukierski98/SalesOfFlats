@@ -14,10 +14,12 @@ namespace Application.Dto
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-
+        public DateTime CreationDate { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Flat, FlatDto>();
+            profile.CreateMap<Flat, FlatDto>()
+                .ForMember(dest => dest.CreationDate,
+                opt => opt.MapFrom(src => src.Created));
         }
     }
 }
