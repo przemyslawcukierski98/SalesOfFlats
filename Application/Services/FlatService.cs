@@ -47,6 +47,11 @@ namespace Application.Services
             return _mapper.Map<IEnumerable<FlatDto>>(flats);
         }
 
+        public async Task<int> GetAllFlatsCountAsync()
+        {
+            return await _flatRepository.GetAllCountAsync();
+        }
+
         public async Task<FlatDto> GetFlatByIdAsync(int id)
         {
             var flat = await _flatRepository.GetFlatByIdAsync(id);

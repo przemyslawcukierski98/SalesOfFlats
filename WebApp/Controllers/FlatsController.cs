@@ -30,7 +30,7 @@ namespace WebApp.Controllers
             var validPaginationFilter = new PaginationFilter(paginationFilter.PageNumber, paginationFilter.PageSize);
 
             var flats = await _flatService.GetAllFlatsAsync(paginationFilter.PageNumber, paginationFilter.PageSize);
-            var totalRecords = flats.Count();
+            var totalRecords = await _flatService.GetAllFlatsCountAsync();
 
             return Ok(PaginationHelper.CreatePagedResponse(flats, paginationFilter, totalRecords));
         }

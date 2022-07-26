@@ -34,6 +34,11 @@ namespace Infrastructure.Repositories
             await Task.CompletedTask;
         }
 
+        public async Task<int> GetAllCountAsync()
+        {
+            return await _context.Flats.CountAsync();
+        }
+
         public async Task<IEnumerable<Flat>> GetAllFlatsAsync(int pageNumber, int pageSize)
         {
             return await _context.Flats.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();

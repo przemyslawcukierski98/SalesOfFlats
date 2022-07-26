@@ -11,6 +11,7 @@ namespace Domain.Interfaces
     {
         Task<IEnumerable<Flat>> GetAllFlatsAsync(int pageNumber, int pageSize);
         Task<Flat> GetFlatByIdAsync(int id);
+        Task<int> GetAllCountAsync();
         Task<Flat> AddAsync(Flat flat);
         Task UpdateAsync(Flat flat);
         Task DeleteAsync(Flat flat);
