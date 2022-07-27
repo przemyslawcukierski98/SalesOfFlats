@@ -9,7 +9,7 @@ namespace Application.Interfaces
 {
     public interface IFlatService
     {
-        Task<IEnumerable<FlatDto>> GetAllFlatsAsync(int pageNumber, int pageSize);
+        Task<IEnumerable<FlatDto>> GetAllFlatsAsync(int pageNumber, int pageSize, string sortField, bool ascending);
         Task<int> GetAllFlatsCountAsync();
         Task<FlatDto> GetFlatByIdAsync(int id);
         Task<FlatDto> AddNewFlatAsync(CreateFlatDto flat);

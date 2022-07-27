@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -39,9 +40,9 @@ namespace Infrastructure.Repositories
             return await _context.Flats.CountAsync();
         }
 
-        public async Task<IEnumerable<Flat>> GetAllFlatsAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<Flat>> GetAllFlatsAsync(int pageNumber, int pageSize, string sortField, bool ascending)
         {
-            return await _context.Flats.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            return await _context.Flats.OrderByPropertyName(sortField, ascending).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
         public async Task<Flat> GetFlatByIdAsync(int id)
