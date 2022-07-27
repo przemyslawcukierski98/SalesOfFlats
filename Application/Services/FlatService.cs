@@ -41,15 +41,15 @@ namespace Application.Services
             await _flatRepository.DeleteAsync(flat);
         }
 
-        public async Task<IEnumerable<FlatDto>> GetAllFlatsAsync(int pageNumber, int pageSize, string sortField, bool ascending)
+        public async Task<IEnumerable<FlatDto>> GetAllFlatsAsync(int pageNumber, int pageSize, string sortField, bool ascending, string filterBy)
         {
-            var flats = await _flatRepository.GetAllFlatsAsync(pageNumber, pageSize, sortField, ascending);
+            var flats = await _flatRepository.GetAllFlatsAsync(pageNumber, pageSize, sortField, ascending, filterBy);
             return _mapper.Map<IEnumerable<FlatDto>>(flats);
         }
 
-        public async Task<int> GetAllFlatsCountAsync()
+        public async Task<int> GetAllFlatsCountAsync(string filterBy)
         {
-            return await _flatRepository.GetAllCountAsync();
+            return await _flatRepository.GetAllCountAsync(filterBy);
         }
 
         public async Task<FlatDto> GetFlatByIdAsync(int id)

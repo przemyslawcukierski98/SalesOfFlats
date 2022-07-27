@@ -35,14 +35,19 @@ namespace Infrastructure.Repositories
             await Task.CompletedTask;
         }
 
-        public async Task<int> GetAllCountAsync()
+        public async Task<int> GetAllCountAsync(string filterBy)
         {
-            return await _context.Flats.CountAsync();
+            return await _context.Flats.Where(m => m.Title.ToLower().Contains(filterBy.ToLower()) || m.Description.ToLower().Contains(filterBy.ToLower())).CountAsync();
         }
 
-        public async Task<IEnumerable<Flat>> GetAllFlatsAsync(int pageNumber, int pageSize, string sortField, bool ascending)
+        public async Task<IEnumerable<Flat>> GetAllFlatsAsync(int pageNumber, int pageSize, string sortField, bool ascending, string filterBy)
         {
-            return await _context.Flats.OrderByPropertyName(sortField, ascending).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            return await _context.Flats
+                .Where(m => m.Title.ToLower().Contains(filterBy.ToLower()) || m.Description.ToLower().Contains(filterBy.ToLower()))
+                .OrderByPropertyName(sortField, ascending)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize).
+                ToListAsync();
         }
 
         public async Task<Flat> GetFlatByIdAsync(int id)

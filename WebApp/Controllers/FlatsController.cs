@@ -25,14 +25,15 @@ namespace WebApp.Controllers
 
         [SwaggerOperation(Summary = "Retrieves all flats")]
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]PaginationFilter paginationFilter, [FromQuery] SortingFilter sortingFilter)
+        public async Task<IActionResult> Get([FromQuery]PaginationFilter paginationFilter, [FromQuery] SortingFilter sortingFilter,
+            [FromQuery] string filterBy = "")
         {
             var validPaginationFilter = new PaginationFilter(paginationFilter.PageNumber, paginationFilter.PageSize);
             var validSortingFilter = new SortingFilter(sortingFilter.SortField, sortingFilter.Ascending);
 
             var flats = await _flatService.GetAllFlatsAsync(validPaginationFilter.PageNumber, validPaginationFilter.PageSize,
-                validSortingFilter.SortField, validSortingFilter.Ascending);
-            var totalRecords = await _flatService.GetAllFlatsCountAsync();
+                validSortingFilter.SortField, validSortingFilter.Ascending, filterBy);
+            var totalRecords = await _flatService.GetAllFlatsCountAsync(filterBy);
 
             return Ok(PaginationHelper.CreatePagedResponse(flats, paginationFilter, totalRecords));
         }
