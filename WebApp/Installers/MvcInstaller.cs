@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Middlewares;
 
 namespace WebApp.Installers
 {
@@ -21,6 +22,8 @@ namespace WebApp.Installers
             services.AddApplication();
             services.AddInfrastructure();
             services.AddControllers();
+
+            services.AddScoped<ErrorHandlingMiddleware>();
         }
     }
 }

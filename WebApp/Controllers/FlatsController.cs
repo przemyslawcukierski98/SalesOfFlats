@@ -35,6 +35,11 @@ namespace WebApp.Controllers
                 validSortingFilter.SortField, validSortingFilter.Ascending, filterBy);
             var totalRecords = await _flatService.GetAllFlatsCountAsync(filterBy);
 
+            if(totalRecords == 0)
+            {
+                return NotFound(new Response<bool> { Succeded = false, Message = "No flats found" });
+            }
+
             return Ok(PaginationHelper.CreatePagedResponse(flats, paginationFilter, totalRecords));
         }
 
@@ -45,7 +50,7 @@ namespace WebApp.Controllers
             var flat = await _flatService.GetFlatByIdAsync(id);
             if (flat == null)
             {
-                return NotFound();
+                return NotFound(new Response<bool> { Succeded = false, Message = "This flat is not found" });
             }
 
             return Ok(new Response<FlatDto>(flat));
@@ -57,15 +62,33 @@ namespace WebApp.Controllers
         {
             var newFlat = await _flatService.AddNewFlatAsync(flat);
 
-            return Created($"api/flats/{newFlat.Id}", new Response<FlatDto>(newFlat)); ;
+            if(string.IsNullOrEmpty(newFlat.Title))
+            {
+                return BadRequest(new Response(false, "Title is empty"));
+            }
+            else if(string.IsNullOrEmpty(newFlat.Description))
+            {
+                return BadRequest(new Response(false, "Description is empty"));
+            }
+            else
+            {
+                return Created($"api/flats/{newFlat.Id}", new Response<FlatDto>(newFlat));
+            }
         }
 
         [SwaggerOperation(Summary = "Update an existing flat")]
         [HttpPut]
         public async Task<IActionResult> Update(UpdateFlatDto flat)
         {
-            await _flatService.UpdateFlatAsync(flat);
-            return NoContent();
+            if(string.IsNullOrEmpty(flat.Description))
+            {
+                return BadRequest(new Response(false, "Description is empty"));
+            }
+            else
+            {
+                await _flatService.UpdateFlatAsync(flat);
+                return NoContent();
+            }
         }
 
         [SwaggerOperation(Summary = "Delete an existing flat")]
