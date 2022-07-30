@@ -60,18 +60,33 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateFlatDto flat)
         {
-            var newFlat = await _flatService.AddNewFlatAsync(flat);
-
-            if(string.IsNullOrEmpty(newFlat.Title))
+            if(string.IsNullOrEmpty(flat.Title))
             {
                 return BadRequest(new Response(false, "Title is empty"));
             }
-            else if(string.IsNullOrEmpty(newFlat.Description))
+            else if(string.IsNullOrEmpty(flat.Description))
             {
                 return BadRequest(new Response(false, "Description is empty"));
             }
+            else if(flat.Area <= 0)
+            {
+                return BadRequest(new Response(false, "Area must be greater than zero"));
+            }
+            else if(flat.Floor <= 0)
+            {
+                return BadRequest(new Response(false, "Floor must be greater than zero"));
+            }
+            else if(flat.Price <= 0)
+            {
+                return BadRequest(new Response(false, "Price must be greater than zero"));
+            }
+            else if(flat.NumberOfRooms <= 0)
+            {
+                return BadRequest(new Response(false, "Number of rooms must be greater than zero"));
+            }
             else
             {
+                var newFlat = await _flatService.AddNewFlatAsync(flat);
                 return Created($"api/flats/{newFlat.Id}", new Response<FlatDto>(newFlat));
             }
         }
@@ -83,6 +98,22 @@ namespace WebApp.Controllers
             if(string.IsNullOrEmpty(flat.Description))
             {
                 return BadRequest(new Response(false, "Description is empty"));
+            }
+            else if (flat.Area <= 0)
+            {
+                return BadRequest(new Response(false, "Area must be greater than zero"));
+            }
+            else if (flat.Floor <= 0)
+            {
+                return BadRequest(new Response(false, "Floor must be greater than zero"));
+            }
+            else if (flat.Price <= 0)
+            {
+                return BadRequest(new Response(false, "Price must be greater than zero"));
+            }
+            else if (flat.NumberOfRooms <= 0)
+            {
+                return BadRequest(new Response(false, "Number of rooms must be greater than zero"));
             }
             else
             {

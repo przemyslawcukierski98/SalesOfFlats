@@ -14,6 +14,10 @@ namespace Application.Dto
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public double Area { get; set; }
+        public int NumberOfRooms { get; set; }
+        public int Price { get; set; }
+        public int Floor { get; set; }
         public DateTime CreationDate { get; set; }
         public void Mapping(Profile profile)
         {
