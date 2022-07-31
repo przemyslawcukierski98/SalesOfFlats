@@ -45,6 +45,7 @@ namespace Domain.Entities
         public string ParkingSpace { get; set; }
         [Comment("Rodzaj ogrzewania")]
         public string Heating { get; set; }
+        public ICollection<Picture> Pictures { get; set; }
 
         public Flat()
         {
