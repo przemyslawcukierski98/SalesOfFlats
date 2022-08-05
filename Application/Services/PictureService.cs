@@ -27,6 +27,22 @@ namespace Application.Services
             _mapper = mapper;
         }
 
+        public async Task<PictureDto> AddPictureToFlatAsync(int flatId, IFormFile file)
+        {
+            var flat = await _flatRepository.GetFlatByIdAsync(flatId);
+
+            var picture = new Picture()
+            {
+                Flats = new List<Flat> { flat },
+                Name = file.FileName,
+                Image = file.GetBytes(),
+                Main = false
+            };
+
+            var result = await _pictureRepository.AddAsync(picture);
+            return _mapper.Map<PictureDto>(result);
+        }
+
         public async Task<PictureDto> AddPictureToPostAsync(int flatId, IFormFile file)
         {
             var flat = await _flatRepository.GetFlatByIdAsync(flatId);
@@ -41,6 +57,18 @@ namespace Application.Services
 
             var result = await _pictureRepository.AddAsync(picture);
             return _mapper.Map<PictureDto>(result);
+        }
+
+        public async Task DeletePictureAsync(int id)
+        {
+            var picture = await _pictureRepository.GetPictureByIdAsync(id);
+            await _pictureRepository.DeleteAsync(picture);
+        }
+
+        public async Task<IEnumerable<PictureDto>> GetPicturesByFlatIdAsync(int flatId)
+        {
+            var pictures = await _pictureRepository.GetPictureByIdAsync(flatId);
+            return _mapper.Map<IEnumerable<PictureDto>>(pictures);
         }
     }
 }

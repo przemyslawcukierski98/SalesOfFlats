@@ -11,5 +11,8 @@ namespace Application.Interfaces
     public interface IPictureService
     {
         Task<PictureDto> AddPictureToPostAsync(int flatId, IFormFile file);
+        Task<IEnumerable<PictureDto>> GetPicturesByFlatIdAsync(int flatId);
+        Task<PictureDto> AddPictureToFlatAsync(int flatId, IFormFile file);
+        Task DeletePictureAsync(int id);
     }
 }
