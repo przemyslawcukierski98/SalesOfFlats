@@ -29,14 +29,42 @@ namespace WebApp.Controllers
         public async Task<IActionResult> AddPictureToAd(int flatId, IFormFile formFile)
         {
             var flat = await _flatService.GetFlatByIdAsync(flatId);
-            
-            if(flat == null)
+
+            if (flat == null)
             {
                 return BadRequest(new Response(false, $"Flat with id {flatId} doesn't exist"));
             }
 
-            var picture = await _pictureService.AddPictureToPostAsync(flatId, formFile);
+            var picture = await _pictureService.AddPictureToFlatAsync(flatId, formFile);
             return Created($"api/pictures/{picture.Id}", new Response<PictureDto>(picture));
+        }
+
+        [SwaggerOperation(Summary = "Retrieve a pictures by flat id")]
+        [HttpGet("{action}/{flatId}")]
+        public async Task<IActionResult> GetByFlatId(int flatId)
+        {
+            var pictures = await _pictureService.GetPicturesByFlatIdAsync(flatId);
+            return Ok(new Response<IEnumerable<PictureDto>>(pictures));
+        }
+
+        [SwaggerOperation(Summary = "Retrieves a specific picture by ID")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var picture = await _pictureService.GetPictureByIdAsync(id);
+            if(picture == null)
+            {
+                return NotFound();
+            }
+            return Ok(new Response<PictureDto>(picture));
+        }
+
+        [SwaggerOperation(Summary = "Delete a specific picture by ID")]
+        [HttpDelete("{flatId}/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _pictureService.DeletePictureAsync(id);
+            return NoContent();
         }
     }
 }

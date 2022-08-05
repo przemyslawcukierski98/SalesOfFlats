@@ -30,29 +30,14 @@ namespace Application.Services
         public async Task<PictureDto> AddPictureToFlatAsync(int flatId, IFormFile file)
         {
             var flat = await _flatRepository.GetFlatByIdAsync(flatId);
+            var existingPictures = await _pictureRepository.GetByFlatIdAsync(flatId);
 
             var picture = new Picture()
             {
                 Flats = new List<Flat> { flat },
                 Name = file.FileName,
                 Image = file.GetBytes(),
-                Main = false
-            };
-
-            var result = await _pictureRepository.AddAsync(picture);
-            return _mapper.Map<PictureDto>(result);
-        }
-
-        public async Task<PictureDto> AddPictureToPostAsync(int flatId, IFormFile file)
-        {
-            var flat = await _flatRepository.GetFlatByIdAsync(flatId);
-
-            var picture = new Picture()
-            {
-                Flats = new List<Flat> { flat },
-                Name = file.Name,
-                Image = file.GetBytes(),
-                Main = true
+                Main = existingPictures.Count() == 0 ? true : false
             };
 
             var result = await _pictureRepository.AddAsync(picture);
@@ -63,6 +48,12 @@ namespace Application.Services
         {
             var picture = await _pictureRepository.GetPictureByIdAsync(id);
             await _pictureRepository.DeleteAsync(picture);
+        }
+
+        public async Task<PictureDto> GetPictureByIdAsync(int id)
+        {
+            var picture = await _pictureRepository.GetByFlatIdAsync(id);
+            return _mapper.Map<PictureDto>(picture);
         }
 
         public async Task<IEnumerable<PictureDto>> GetPicturesByFlatIdAsync(int flatId)
