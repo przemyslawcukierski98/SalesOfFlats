@@ -4,42 +4,22 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SalesContext))]
-    partial class SalesContextModelSnapshot : ModelSnapshot
+    [Migration("20220808202943_add_attachment")]
+    partial class add_attachment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.1");
-
-            modelBuilder.Entity("Domain.Entities.Attachment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Attachment");
-                });
 
             modelBuilder.Entity("Domain.Entities.Flat", b =>
                 {
@@ -52,9 +32,6 @@ namespace Infrastructure.Migrations
                     b.Property<double>("Area")
                         .HasColumnType("float")
                         .HasComment("Powierzchnia mieszkania (w metrach kwadratowych)");
-
-                    b.Property<int?>("AttachmentId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -114,8 +91,6 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AttachmentId");
-
                     b.ToTable("Flats");
                 });
 
@@ -158,13 +133,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("FlatPicture");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Flat", b =>
-                {
-                    b.HasOne("Domain.Entities.Attachment", null)
-                        .WithMany("Flats")
-                        .HasForeignKey("AttachmentId");
-                });
-
             modelBuilder.Entity("FlatPicture", b =>
                 {
                     b.HasOne("Domain.Entities.Flat", null)
@@ -178,11 +146,6 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("PicturesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attachment", b =>
-                {
-                    b.Navigation("Flats");
                 });
 #pragma warning restore 612, 618
         }

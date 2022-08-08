@@ -13,6 +13,7 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+            services.AddScoped<IAttachmentRepository, AttachmentRepository>();
             services.AddScoped<IFlatRepository, FlatRepository>();
             services.AddScoped<IPictureRepository, PictureRepository>();
 
