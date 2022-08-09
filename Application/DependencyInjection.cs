@@ -18,6 +18,7 @@ namespace Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IFlatService, FlatService>();
             services.AddScoped<IPictureService, PictureService>();
+            services.AddScoped<IAttachmentService, AttachmentService>();
 
             return services;
         }
