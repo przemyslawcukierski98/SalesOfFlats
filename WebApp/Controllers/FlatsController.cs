@@ -1,5 +1,6 @@
 ﻿using Application.Dto;
 using Application.Interfaces;
+using Application.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -60,29 +61,17 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateFlatDto flat)
         {
-            if(string.IsNullOrEmpty(flat.Title))
+            var validator = new CreateFlatDtoValidator();
+            var result = validator.Validate(flat);
+
+            if(!result.IsValid)
             {
-                return BadRequest(new Response(false, "Title is empty"));
-            }
-            else if(string.IsNullOrEmpty(flat.Description))
-            {
-                return BadRequest(new Response(false, "Description is empty"));
-            }
-            else if(flat.Area <= 0)
-            {
-                return BadRequest(new Response(false, "Area must be greater than zero"));
-            }
-            else if(flat.Floor <= 0)
-            {
-                return BadRequest(new Response(false, "Floor must be greater than zero"));
-            }
-            else if(flat.Price <= 0)
-            {
-                return BadRequest(new Response(false, "Price must be greater than zero"));
-            }
-            else if(flat.NumberOfRooms <= 0)
-            {
-                return BadRequest(new Response(false, "Number of rooms must be greater than zero"));
+                return BadRequest(new Response<bool>
+                {
+                    Succeded = false,
+                    Message = "Something went wrong.",
+                    Errors = result.Errors.Select(x => x.ErrorMessage)
+                });
             }
             else
             {

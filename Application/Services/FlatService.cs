@@ -24,11 +24,6 @@ namespace Application.Services
 
         public async Task<FlatDto> AddNewFlatAsync(CreateFlatDto flat)
         {
-            if(string.IsNullOrEmpty(flat.Title))
-            {
-                throw new Exception("Title is empty");
-            }
-
             var newFlat = _mapper.Map<Flat>(flat);
             await _flatRepository.AddAsync(newFlat);
 
