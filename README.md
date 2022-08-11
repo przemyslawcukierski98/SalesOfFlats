@@ -11,3 +11,4 @@ Project created as part of learning how to create WEB APIs, taking into account 
 - monitoring the health of applications using the Health Check mechanism
 - NLog data logging
 - application testing using unit tests and integration tests
+- extension of Swagger documentation to better describe endpoints
