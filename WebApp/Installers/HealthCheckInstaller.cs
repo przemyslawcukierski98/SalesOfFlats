@@ -11,9 +11,9 @@ namespace WebApp.Installers
     public class HealthCheckInstaller : IInstaller
     {
         public void InstallServices(IServiceCollection serviceCollection, IConfiguration configuration)
-        {
+        {  
             serviceCollection.AddHealthChecks()
-                .AddDbContextCheck<SalesContext>();
+                .AddDbContextCheck<SalesContext>("Database");
         }
     }
 }
