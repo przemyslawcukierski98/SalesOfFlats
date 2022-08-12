@@ -47,6 +47,7 @@ namespace WebApp
             }
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseHealthChecks("/health");
             app.UseHttpsRedirection();
 
             app.UseRouting();
