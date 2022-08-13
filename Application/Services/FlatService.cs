@@ -19,7 +19,7 @@ namespace Application.Services
         private readonly ILogger _logger;
 
         public FlatService(IFlatRepository flatRepository, IMapper mapper,
-            ILogger logger)
+            ILogger<FlatService> logger)
         {
             _flatRepository = flatRepository;
             _mapper = mapper;
@@ -51,6 +51,14 @@ namespace Application.Services
 
             var flats = await _flatRepository.GetAllFlatsAsync(pageNumber, pageSize, sortField, ascending, filterBy);
             return _mapper.Map<IEnumerable<FlatDto>>(flats);
+        }
+
+        public IQueryable<FlatDto> GetAllFlatsAsync()
+        { 
+            _logger.LogDebug("Get all announcement with flats");
+
+            var flats = _flatRepository.GetAllFlatsAsync();
+            return _mapper.ProjectTo<FlatDto>(flats);
         }
 
         public async Task<int> GetAllFlatsCountAsync(string filterBy)

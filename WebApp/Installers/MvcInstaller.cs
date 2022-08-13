@@ -22,7 +22,7 @@ namespace WebApp.Installers
             services.AddApplication();
             services.AddInfrastructure();
             services.AddControllers();
-
+            services.AddMemoryCache();
             services.AddScoped<ErrorHandlingMiddleware>();
         }
     }

@@ -2,6 +2,8 @@
 using Application.Interfaces;
 using Application.Validators;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
@@ -18,13 +20,18 @@ namespace WebApp.Controllers
     public class FlatsController : ControllerBase
     {
         private readonly IFlatService _flatService;
+        private readonly IMemoryCache _memoryCache;
+        private readonly ILogger _logger;
 
-        public FlatsController(IFlatService flatService)
+        public FlatsController(IFlatService flatService, IMemoryCache memoryCache,
+            ILogger<FlatsController> logger)
         {
             _flatService = flatService;
+            _memoryCache = memoryCache;
+            _logger = logger;
         }
 
-        [SwaggerOperation(Summary = "Retrieves all flats")]
+        [SwaggerOperation(Summary = "Retrieves all flats with filter")]
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery]PaginationFilter paginationFilter, [FromQuery] SortingFilter sortingFilter,
             [FromQuery] string filterBy = "")
@@ -42,6 +49,26 @@ namespace WebApp.Controllers
             }
 
             return Ok(PaginationHelper.CreatePagedResponse(flats, paginationFilter, totalRecords));
+        }
+
+        [SwaggerOperation(Summary = "Retrieves all flats")]
+        [HttpGet("[action]")]
+        public IQueryable<FlatDto> GetAll()
+        {
+            var flats = _memoryCache.Get<IQueryable<FlatDto>>("flats");
+
+            if(flats == null)
+            {
+                _logger.LogInformation("Fetching from service");
+                flats = _flatService.GetAllFlatsAsync();
+                _memoryCache.Set("flats", flats, TimeSpan.FromMinutes(1));
+            }
+            else
+            {
+                _logger.LogInformation("Fetching from cache");
+            }
+
+            return flats;
         }
 
         [SwaggerOperation(Summary = "Retrieve flat by ID")]

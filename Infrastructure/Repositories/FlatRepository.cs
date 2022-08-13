@@ -50,6 +50,11 @@ namespace Infrastructure.Repositories
                 ToListAsync();
         }
 
+        public IQueryable<Flat> GetAllFlatsAsync()
+        {
+            return _context.Flats.AsQueryable();
+        }
+
         public async Task<Flat> GetFlatByIdAsync(int id)
         {
             return await _context.Flats.SingleOrDefaultAsync(x => x.Id == id);
