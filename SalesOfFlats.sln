@@ -25,9 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F49A6725-2577-401F-9C3F-77DC8C8FA6C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{930144C6-9A90-47FE-89E0-FA905703AD42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{930144C6-9A90-47FE-89E0-FA905703AD42}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0A65D21-1A87-4868-B830-75D7B5DAD532} = {C0A65D21-1A87-4868-B830-75D7B5DAD532}
+		{8D8964EF-0AA6-40E7-BA63-F09C9AB87154} = {8D8964EF-0AA6-40E7-BA63-F09C9AB87154}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndToEndTests", "EndToEndTests\EndToEndTests.csproj", "{3DEEA080-2FEA-44E8-938E-FF857C5F8B5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EndToEndTests", "EndToEndTests\EndToEndTests.csproj", "{3DEEA080-2FEA-44E8-938E-FF857C5F8B5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
