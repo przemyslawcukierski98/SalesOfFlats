@@ -13,6 +13,5 @@ namespace Application.Interfaces
         Task<IEnumerable<AttachmentDto>> GetAttachmentsByFlatIdAsync(int flatId);
         Task<DownloadAttachmentDto> DownloadAttachmentByIdAsync(int id);
         Task<AttachmentDto> AddAttachmentToFlatAsync(int postId, IFormFile file);
-        Task DeleteAttachmentAsync(int id);
     }
 }

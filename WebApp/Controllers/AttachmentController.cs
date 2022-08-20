@@ -59,13 +59,5 @@ namespace WebApp.Controllers
             var attachment = await _attachmentService.AddAttachmentToFlatAsync(flatId, file);
             return Created($"api/attachments/{attachment.Id}", new Response<AttachmentDto>(attachment));
         }
-
-        [SwaggerOperation(Summary = "Delete a specific attachment")]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await _attachmentService.DeleteAttachmentAsync(id);
-            return NoContent();
-        }
     }
 }
